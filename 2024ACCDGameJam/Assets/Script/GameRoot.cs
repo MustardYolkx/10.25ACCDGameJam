@@ -11,9 +11,10 @@ public class GameRoot : MonoBehaviour
     
 
     private static GameRoot instance;
+    public Dictionary<string, GameObject> currentOpenFile_Dictionary = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> computerFile_Dictionary = new Dictionary<string, GameObject>();
 
-    
-
+    public float virusOriginSpeed = 0.1f;
     public static GameRoot GetInstance()
     {
         if(instance == null)
@@ -45,14 +46,14 @@ public class GameRoot : MonoBehaviour
         UIManager_Root.canvasObj = UI_Method.GetInstance().FindCanvas();
 
         //Scene1 scene1 = new Scene1();
-
-        //SceneControl_Root.dict_scene.Add(scene1.SceneName, scene1);
         
+        //SceneControl_Root.dict_scene.Add(scene1.SceneName, scene1);
+
         //NPC1_Dialogue npc1 = new NPC1_Dialogue();
         //Dialog_Dictionary.dict_dialogue.Add("NPC1", npc1);
-       
+
         #region Push First Panel
-        //UIManager_Root.Push(new StartPanel());
+        UIManager_Root.Push(new StartPanel());
 
         #endregion
     }
