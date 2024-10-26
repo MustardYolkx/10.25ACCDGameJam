@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class OwnerAI : MonoBehaviour
 {
@@ -28,7 +29,11 @@ public class OwnerAI : MonoBehaviour
     public float maxActiveTime;
 
     // misc
+    [Header("Alerted Variables")]
     public bool isOnAlert;
+
+    //[Header("misc unlabled")]
+    //private List<Application> apps = new List<Application>();
 
     // list of favorite applications
 
@@ -79,6 +84,8 @@ public class OwnerAI : MonoBehaviour
         // if owner isnt alerted to something goin on, proceed with usual routine
         if (!isOnAlert)
         {
+            CheckOpenApplications();
+
             // start timer to switch
             if (switchToAFKCoroutine == null)
             {
@@ -101,6 +108,30 @@ public class OwnerAI : MonoBehaviour
         // when owner notices something up with the computer, switch to this state
 
         // activate antivirus software
+    }
+
+    private void CheckOpenApplications()
+    {
+        // gets list of the applications open
+        List<Application> apps = new List<Application>();
+
+        Application[] openApps = FindObjectsOfType<Application>();
+        foreach (Application openApp in openApps) 
+        { 
+            apps.Add(openApp);
+        }
+
+        if (apps.Count > 2) 
+        {
+            while (apps.Count > 1)
+            {
+                // get last app in list
+                Application app = apps.First();
+
+                app.gameObject.SetActive(false);
+                apps.Remove(app);
+            }
+        }
     }
 
     // coroutines
