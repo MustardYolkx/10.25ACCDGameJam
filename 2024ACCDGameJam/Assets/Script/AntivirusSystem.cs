@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntivirusSystem : MonoBehaviour
 {
     public float antivirusSpeed = 5f; // The infection progress reduced by each antivirus. !!!Modify it!!!
-    private bool isAntivirusRunning = false; // Mark whether it is running
+    public bool isAntivirusRunning = false; // Mark whether it is running
     private GameObject currentTarget = null; // Current target file
 
     public void RunAntivirus(Dictionary<string, GameObject> computerFileDictionary)
