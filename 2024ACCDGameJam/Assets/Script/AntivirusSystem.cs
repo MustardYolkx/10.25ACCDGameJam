@@ -21,16 +21,19 @@ public class AntivirusSystem : MonoBehaviour
     {
         isAntivirusRunning = true;
 
+        Dictionary<string, GameObject>.ValueCollection valueColl = computerFileDictionary.Values;
+
         // Traverse all files and look for infected files
-        foreach (var fileEntry in computerFileDictionary)
+        foreach (GameObject fileEntry in valueColl)
         {
-            var fileObject = fileEntry.Value;
-            var fileComponent = fileObject.GetComponent<IsFile>();
+            Debug.Log("can access dictionary");
+
+            IsFile fileComponent = fileEntry.GetComponent<IsFile>();
 
             // Check if the file is currently infected
             if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 && fileComponent.currentProcess < 1)
             {
-                currentTarget = fileObject;
+                currentTarget = fileEntry;
 
                 // Gradually reduce the progress of infection
                 while (fileComponent.currentProcess > 0)

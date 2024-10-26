@@ -129,14 +129,21 @@ public class OwnerAI : MonoBehaviour
 
         if (gameRoot.currentOpenFile_Dictionary != null)
         {
-            // Traverse all files and look for infected files
-            foreach (var fileEntry in gameRoot.currentOpenFile_Dictionary)
+            Dictionary<string, GameObject>.ValueCollection valueColl = gameRoot.currentOpenFile_Dictionary.Values;
+
+            // Traverse all files and look for infected files (cannot access foreach loop)
+            foreach (GameObject entry in valueColl)
             {
-                var fileObject = fileEntry.Value;
-                var fileComponent = fileObject.GetComponent<IsFile>();
+                //GameObject fileObject = entry;
+                PageInfo fileComponent = entry.GetComponent<PageInfo>();
+
+                if (fileComponent == null)
+                {
+                    Debug.Log("fileComponent null!! cannot find PageInfo script");
+                }
 
                 // Check if the file is currently infected
-                if (fileComponent != null && fileComponent.hasVirus)
+                if (fileComponent != null && fileComponent.fileInfo.hasVirus)
                 {
                     Debug.Log("virus detected---return true");
                     virusFound = true;
@@ -146,7 +153,7 @@ public class OwnerAI : MonoBehaviour
         }
         else { return false; }
 
-        if (virusFound) { Debug.Log("virus detected!!!!"); return true; }    
+        if (virusFound) {return true; }    
         else { return false; }
     }
 
