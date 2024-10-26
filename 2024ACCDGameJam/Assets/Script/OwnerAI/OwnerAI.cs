@@ -121,7 +121,7 @@ public class OwnerAI : MonoBehaviour
             Debug.Log("antivirus finished running");
         }
     }
-
+    // functional yaaaaaay party
     private bool IsVirusRunning()
     {
         //GameRoot gameRoot = GameRoot.GetInstance();
@@ -145,7 +145,7 @@ public class OwnerAI : MonoBehaviour
                 // Check if the file is currently infected
                 if (fileComponent != null && fileComponent.fileInfo.hasVirus)
                 {
-                    Debug.Log("virus detected---return true");
+                    
                     virusFound = true;
                 }
                 else { virusFound = false; }
@@ -153,7 +153,7 @@ public class OwnerAI : MonoBehaviour
         }
         else { return false; }
 
-        if (virusFound) {return true; }    
+        if (virusFound) {Debug.Log("virus detected---return true"); return true; }    
         else { return false; }
     }
 

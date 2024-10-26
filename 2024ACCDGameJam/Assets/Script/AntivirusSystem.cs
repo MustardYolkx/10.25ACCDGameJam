@@ -26,8 +26,6 @@ public class AntivirusSystem : MonoBehaviour
         // Traverse all files and look for infected files
         foreach (GameObject fileEntry in valueColl)
         {
-            Debug.Log("can access dictionary");
-
             IsFile fileComponent = fileEntry.GetComponent<IsFile>();
 
             // Check if the file is currently infected
