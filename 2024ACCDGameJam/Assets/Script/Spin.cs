@@ -1,27 +1,40 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-public class RotationPuzzle2D : MonoBehaviour
+public class SpinUI : MonoBehaviour
 {
-    public string[] targetObjectNames = { "Object1", "Object2", "Object3" }; // Names of child objects
-    public float[] targetRotations = { 90f, 180f, 270f }; // Target rotations for each object
+    public string[] targetObjectNames = { "Object1", "Object2", "Object3" }; // Names of UI elements
+    public float[] targetRotations = { 90f, 180f, 270f }; // Target rotations for each UI element
     public float rotationSpeed = 100f; // Speed of rotation with mouse
 
     [Range(0.1f, 5f)]
     public float tolerance = 2f; // Tolerance for winning rotation check
 
-    private Transform[] rotatingObjects; // Array of rotating objects
-    private Transform currentObject; // Currently selected object
+    private RectTransform[] rotatingObjects; // Array of UI elements as RectTransforms
+    private RectTransform currentObject; // Currently selected UI element
+    private GraphicRaycaster raycaster; // GraphicRaycaster for UI raycasting
+    private EventSystem eventSystem; // EventSystem for UI interaction
 
     void Start()
     {
-        // Initialize the rotating objects array by finding child objects
-        rotatingObjects = new Transform[targetObjectNames.Length];
+        // Set up GraphicRaycaster and EventSystem for Canvas interaction
+        raycaster = FindObjectOfType<GraphicRaycaster>();
+        eventSystem = EventSystem.current;
+
+        // Initialize rotatingObjects by finding children under this parent
+        rotatingObjects = new RectTransform[targetObjectNames.Length];
         for (int i = 0; i < targetObjectNames.Length; i++)
         {
-            rotatingObjects[i] = transform.Find(targetObjectNames[i]);
-            if (rotatingObjects[i] == null)
+            Transform foundTransform = transform.Find(targetObjectNames[i]);
+            if (foundTransform != null && foundTransform is RectTransform rectTransform)
             {
-                Debug.LogWarning("Object named " + targetObjectNames[i] + " not found as a child of " + gameObject.name);
+                rotatingObjects[i] = rectTransform;
+            }
+            else
+            {
+                Debug.LogWarning("UI element named " + targetObjectNames[i] + " not found as a child of " + gameObject.name);
             }
         }
     }
@@ -36,13 +49,15 @@ public class RotationPuzzle2D : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SelectObjectUnderMouse();
+            SelectUIElementUnderMouse();
         }
 
         if (Input.GetMouseButton(0) && currentObject != null)
         {
             float rotationAmount = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-            currentObject.Rotate(Vector3.forward, rotationAmount);
+            Vector3 newRotation = currentObject.localEulerAngles;
+            newRotation.z += rotationAmount;
+            currentObject.localEulerAngles = newRotation;
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -51,15 +66,25 @@ public class RotationPuzzle2D : MonoBehaviour
         }
     }
 
-    void SelectObjectUnderMouse()
+    void SelectUIElementUnderMouse()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-        if (hit.collider != null && System.Array.Exists(rotatingObjects, obj => obj == hit.transform))
+        PointerEventData pointerData = new PointerEventData(eventSystem)
         {
-            currentObject = hit.transform;
-            Debug.Log("Selected object: " + currentObject.name);
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            RectTransform clickedObject = result.gameObject.GetComponent<RectTransform>();
+            if (clickedObject != null && System.Array.Exists(rotatingObjects, obj => obj == clickedObject))
+            {
+                currentObject = clickedObject;
+                Debug.Log("Selected UI element: " + currentObject.name);
+                return;
+            }
         }
     }
 
@@ -69,7 +94,7 @@ public class RotationPuzzle2D : MonoBehaviour
         {
             if (!IsRotationClose(rotatingObjects[i], targetRotations[i]))
             {
-                return; // Exit if any object is not close to its target rotation
+                return; // Exit if any UI element is not close to its target rotation
             }
         }
         Win();
@@ -79,25 +104,25 @@ public class RotationPuzzle2D : MonoBehaviour
     void Win()
     {
         Debug.Log("You Win!");
-        ChangeColorToGreen(); // Change color of objects to green
+        ChangeColorToGreen(); // Change color of UI elements to green
     }
 
-    // Change all rotating objects to green
+    // Change all rotating UI elements to green
     void ChangeColorToGreen()
     {
         foreach (var obj in rotatingObjects)
         {
-            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
-            if (sr != null)
+            Image img = obj.GetComponent<Image>();
+            if (img != null)
             {
-                sr.color = Color.green;
+                img.color = Color.green;
             }
         }
     }
 
-    bool IsRotationClose(Transform obj, float targetRotation)
+    bool IsRotationClose(RectTransform obj, float targetRotation)
     {
-        float angle = Mathf.Abs(Mathf.DeltaAngle(obj.eulerAngles.z, targetRotation));
+        float angle = Mathf.Abs(Mathf.DeltaAngle(obj.localEulerAngles.z, targetRotation));
         return angle <= tolerance;
     }
 }
