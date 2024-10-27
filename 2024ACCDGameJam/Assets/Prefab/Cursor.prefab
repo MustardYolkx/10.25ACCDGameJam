@@ -62,7 +62,7 @@ MonoBehaviour:
   cursorMoveTime: 1.5
   targetTransform: {fileID: 0}
   idlePos: {fileID: 0}
-  hasTarget: 0
+  cursorState: 0
 --- !u!114 &573230762417150918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 4e4b089e3c1112b4eb6d1e86c65201a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9959bd852c4213349a1aade9d63c067a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

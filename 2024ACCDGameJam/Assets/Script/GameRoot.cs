@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
@@ -85,5 +86,20 @@ public class GameRoot : MonoBehaviour
         entireProcess = totalPercent/ file_List.Count;
         yield return new WaitForSeconds(0.2f);
         StartCoroutine(CheckEntireProcess());
+    }
+
+    public void CheckWinCondition()
+    {
+        if(entireProcess == 1)
+        {
+            GameWin();
+        }
+    }
+
+    private void GameWin()
+    {
+
+        GameObject winPanel = Resources.Load<GameObject>("UIPanel/WinPanel");
+        Instantiate(winPanel, uiManager.canvasObj.transform);
     }
 }
