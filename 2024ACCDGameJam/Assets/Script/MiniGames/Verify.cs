@@ -8,7 +8,7 @@ public class Verify : MonoBehaviour
 {
     public TMP_InputField playerInput; // Reference to the input field
     private string generatedCode; // The random code generated
-    private TextMeshProUGUI codeDisplay; // The text component for displaying the code
+    public TextMeshProUGUI codeDisplay; // The text component for displaying the code
 
     public TextMeshProUGUI completionText;
 
@@ -23,7 +23,7 @@ public class Verify : MonoBehaviour
 
     void Start()
     {
-        codeDisplay = GetComponent<TextMeshProUGUI>(); // Get the TextMeshProUGUI component
+        //codeDisplay = GetComponent<TextMeshProUGUI>(); // Get the TextMeshProUGUI component
         GenerateCode();
         playerInput.onSubmit.AddListener(delegate { CheckInput(); });
 
@@ -39,6 +39,7 @@ public class Verify : MonoBehaviour
                 CheckInput();
             }
         }
+        transform.SetAsLastSibling();
     }
 
     void GenerateCode()

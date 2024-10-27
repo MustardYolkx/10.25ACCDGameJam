@@ -44,6 +44,7 @@ public class qteGame : MonoBehaviour
                 CheckHit();
             }
         }
+        transform.SetAsLastSibling();
     }
 
     private void RotatePointer()

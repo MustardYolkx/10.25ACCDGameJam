@@ -27,13 +27,16 @@ public class PageInfo : MonoBehaviour
                 fileInfo = GameRoot.GetInstance().computerFile_Dictionary[name].GetComponent<IsFile>();
             }
         }
-
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         text.text = (fileInfo.currentProcess*100).ToString("0");
+
+        hasVirus = fileInfo.hasVirus;
     }
 }

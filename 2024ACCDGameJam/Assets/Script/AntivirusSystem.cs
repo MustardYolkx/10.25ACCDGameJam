@@ -28,34 +28,37 @@ public class AntivirusSystem : MonoBehaviour
         // Traverse all files and look for infected files
         foreach (GameObject fileEntry in valueColl)
         {
-            IsFile fileComponent = fileEntry.GetComponent<IsFile>();
+            IsFile fileComponent = fileEntry.GetComponent<PageInfo>().fileInfo;
 
             // Check if the file is currently infected
-            if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 && fileComponent.currentProcess < 1)
+            if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 /*&& fileComponent.currentProcess < 1*/)
             {
                 currentTarget = fileEntry;
 
-                GameRoot.GetInstance().antiVirusKillingSpeed += antivirusSpeed;
+                GameRoot.GetInstance().isAntiSystemKilling = true;
 
                 // Gradually reduce the progress of infection
                 while (fileComponent.currentProcess > 0)
                 {
                     yield return new WaitForEndOfFrame();
 
-                    fileComponent.currentProcess -= GameRoot.GetInstance().antiVirusKillingSpeed += antivirusSpeed * Time.deltaTime;
+                    fileComponent.currentProcess -= (antivirusSpeed * Time.deltaTime+ GameRoot.GetInstance().antiVirusKillingSpeed* Time.deltaTime);
 
                     //Make sure progress doesn't drop to negative values
                     if (fileComponent.currentProcess < 0)
                         fileComponent.currentProcess = 0;
-
+                        GameRoot.GetInstance().isAntiSystemKilling = false;
                     //yield return null; // Update every frame
                 }
 
                 // Clear virus markers
                 fileComponent.hasVirus = false;
-                GameRoot.GetInstance().antiVirusKillingSpeed -= antivirusSpeed;
+                
+                
                 currentTarget = null;
             }
+            //Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[fileComponent.fileName]);
+            //GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(fileComponent.fileName);
         }
         OwnerAI ownerAI = FindObjectOfType<OwnerAI>().GetComponent<OwnerAI>();
         if (ownerAI != null) 

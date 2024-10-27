@@ -156,7 +156,7 @@ public class OwnerAI : MonoBehaviour
     private void UpdateOnAlert()
     {
         // activate antivirus software
-        antivirusSystem.RunAntivirus(gameRoot.computerFile_Dictionary);
+        antivirusSystem.RunAntivirus(gameRoot.currentOpenFile_Dictionary);
     }
     // functional yaaaaaay party
     private bool IsVirusRunning()
@@ -245,7 +245,7 @@ public class OwnerAI : MonoBehaviour
         if (GameRoot.GetInstance().currentOpenFile_Dictionary.Count ==0)
         {
             currentTargetFile = gameRoot.fileNames[Random.Range(0, gameRoot.fileNames.Count)];
-            GameObject targetFile = gameRoot.computerFile_Dictionary[gameRoot.fileNames[Random.Range(0, gameRoot.fileNames.Count)]];
+            GameObject targetFile = gameRoot.computerFile_Dictionary[currentTargetFile];
             cursor.ownerAI = this;
             cursor.targetTransform = targetFile.transform;
             cursor.cursorState = OwnerCursor.CursorState.MovetoFile;
@@ -302,20 +302,24 @@ public class OwnerAI : MonoBehaviour
     public void ClosePage()
     {
         cursor.StartCoroutine(cursor.StayForAWhile());
-        if (GameRoot.GetInstance().currentOpenFile_Dictionary.ContainsKey(currentTargetFile))
+        if(currentState!=OwnerStates.OnAlert)
         {
-            Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[currentTargetFile]);
-            GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(currentTargetFile);
-        }
-        else if(GameRoot.GetInstance().currentOpenFile_Dictionary.Count>0)
-        {
-            foreach (string s in GameRoot.GetInstance().currentOpenFile_Dictionary.Keys)
+            if (GameRoot.GetInstance().currentOpenFile_Dictionary.ContainsKey(currentTargetFile))
             {
-                Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[s]);
-                GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(s);
-                break;
+                Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[currentTargetFile]);
+                GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(currentTargetFile);
+            }
+            else if (GameRoot.GetInstance().currentOpenFile_Dictionary.Count > 0)
+            {
+                foreach (string s in GameRoot.GetInstance().currentOpenFile_Dictionary.Keys)
+                {
+                    Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[s]);
+                    GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(s);
+                    break;
+                }
             }
         }
+       
         currentTargetFile = "";
         isFileOpen= false;
         //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());

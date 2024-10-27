@@ -34,6 +34,7 @@ public class StartPanel : BasePanel
         {
             GameRoot.GetInstance().computerFile_Dictionary.Add(f.fileName, f.gameObject);
             GameRoot.GetInstance().fileNames.Add(f.fileName);
+            GameRoot.GetInstance().file_List.Add(f);
         }
         
 

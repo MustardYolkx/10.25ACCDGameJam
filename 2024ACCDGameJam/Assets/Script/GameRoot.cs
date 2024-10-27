@@ -16,13 +16,19 @@ public class GameRoot : MonoBehaviour
     public Dictionary<string, GameObject> computerFile_Dictionary = new Dictionary<string, GameObject>();
 
     public float antiVirusKillingSpeed = 0f;
-
+    public bool isAntiSystemKilling;
     public float virusOriginSpeed = 0.1f;
 
+    public AntivirusSystem antivirusSystem;
     public GameObject cursor;
     public Transform idlePos;
 
     public OwnerAI ownerScr;
+
+
+    public float entireProcess;
+
+    public List<IsFile> file_List;
     public static GameRoot GetInstance()
     {
         if(instance == null)
@@ -46,15 +52,16 @@ public class GameRoot : MonoBehaviour
 
         uiManager = new UI_Manager();
         ownerScr= FindObjectOfType<OwnerAI>();
+        antivirusSystem = GetComponent<AntivirusSystem>();
     }
 
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
         UIManager_Root.canvasObj = UI_Method.GetInstance().FindCanvas();
-
+        StartCoroutine(CheckEntireProcess());
         //Scene1 scene1 = new Scene1();
-        
+
         //SceneControl_Root.dict_scene.Add(scene1.SceneName, scene1);
 
         //NPC1_Dialogue npc1 = new NPC1_Dialogue();
@@ -68,5 +75,15 @@ public class GameRoot : MonoBehaviour
         Instantiate(cursor, uiManager.canvasObj.transform, idlePos);
     }
 
-
+    IEnumerator CheckEntireProcess()
+    {
+        float totalPercent = 0.01f;
+        for(int i = 0; i < file_List.Count; i++)
+        {
+            totalPercent += file_List[i].currentProcess;
+        }
+        entireProcess = totalPercent/ file_List.Count;
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(CheckEntireProcess());
+    }
 }

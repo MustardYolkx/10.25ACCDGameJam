@@ -433,9 +433,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7176056000830685224}
   - component: {fileID: 7817085074749223059}
+  - component: {fileID: 760529042019131647}
   - component: {fileID: 2553012291746023650}
   - component: {fileID: 1592208788771547341}
-  - component: {fileID: 760529042019131647}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -470,6 +470,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3749593843718269778}
   m_CullTransparentMesh: 1
+--- !u!114 &760529042019131647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3749593843718269778}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e46250975a1bde4f9b656c42056cf3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 7331444821021806056}
+  codeDisplay: {fileID: 0}
+  completionText: {fileID: 6506424569897035158}
 --- !u!114 &2553012291746023650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,20 +584,6 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4822effd801d2d43b1a3229a49c29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 7331444821021806056}
-  completionText: {fileID: 6506424569897035158}
---- !u!114 &760529042019131647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3749593843718269778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e46250975a1bde4f9b656c42056cf3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 7331444821021806056}
@@ -805,8 +806,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 964620370013131997}
+  - component: {fileID: -1532299734292054433}
   m_Layer: 5
-  m_Name: VerifyPrefab
+  m_Name: weaVerifyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -836,6 +838,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-1532299734292054433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535390525326482205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e46250975a1bde4f9b656c42056cf3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 7331444821021806056}
+  codeDisplay: {fileID: 2553012291746023650}
+  completionText: {fileID: 6506424569897035158}
 --- !u!1 &5991923578783153532
 GameObject:
   m_ObjectHideFlags: 0

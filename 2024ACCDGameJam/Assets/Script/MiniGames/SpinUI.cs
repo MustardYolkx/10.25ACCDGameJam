@@ -40,7 +40,10 @@ public class SpinUI : MonoBehaviour
         }
 
     }
-
+    private void Update()
+    {
+        transform.SetAsLastSibling();
+    }
     private void RotateButton(Button button)
     {
         // Rotate the button by 90 degrees

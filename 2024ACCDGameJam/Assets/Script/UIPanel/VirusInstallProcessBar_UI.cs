@@ -24,7 +24,7 @@ public class VirusInstallProcessBar_UI : MonoBehaviour
     {
         currentInstallProcess += installSpeed * Time.deltaTime;
         contentBar.fillAmount = currentInstallProcess / 1;
-
+        transform.SetAsLastSibling();
         if (currentInstallProcess > 1)
         {
             hackerInput.InfectVirus(contentFromHackInput);
