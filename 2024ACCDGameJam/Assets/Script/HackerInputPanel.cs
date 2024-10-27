@@ -283,7 +283,7 @@ public class HackerInputPanel : MonoBehaviour
 
     private IEnumerator DestroyMiniGameInstanceWithDelay(GameObject miniGameInstance)
     {
-        yield return new WaitForSeconds(1f); // wait 1 sec
+        yield return new WaitForSeconds(1f); // µÈ´ý1Ãë
         Destroy(miniGameInstance);
     }
 
