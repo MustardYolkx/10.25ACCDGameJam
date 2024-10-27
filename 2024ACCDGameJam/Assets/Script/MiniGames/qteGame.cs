@@ -77,9 +77,11 @@ public class qteGame : MonoBehaviour
 
     private void GameSuccess()
     {
-        isGameActive = false;
-        completionText.gameObject.SetActive(true); // Show the success message
-        Debug.Log("Win");
+        // 显示胜利文本
+        completionText.gameObject.SetActive(true);
+        Debug.Log("win");
+
+        // 触发胜利事件
         OnMiniGameSuccess?.Invoke();
     }
 
