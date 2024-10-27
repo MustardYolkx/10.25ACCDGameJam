@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class SpinUI : MonoBehaviour
+public class Spin : MonoBehaviour
 {
     public string[] targetObjectNames = { "Object1", "Object2", "Object3" }; // Names of UI elements
     public float[] targetRotations = { 90f, 180f, 270f }; // Target rotations for each UI element

@@ -67,7 +67,14 @@ public class UI_Manager
         }
 
         GameObject ui_object = GetSingleObject(basePanel_push.uiType);
-        dict_uiObj.Add(basePanel_push.uiType.Name, ui_object);
+        if (dict_uiObj.ContainsKey(basePanel_push.uiType.Name))
+        {
+            dict_uiObj[basePanel_push.uiType.Name] = ui_object;
+        }
+        else
+        {
+            dict_uiObj.Add(basePanel_push.uiType.Name, ui_object);
+        }
         basePanel_push.ActiveObj = ui_object;
 
         if(stack_ui.Count == 0)

@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 931767894468634906}
   - component: {fileID: 5080883368424971255}
   - component: {fileID: -544722655425582134}
+  - component: {fileID: -6808711769710454595}
   m_Layer: 5
   m_Name: UnityPanel
   m_TagString: Untagged
@@ -201,6 +202,7 @@ MonoBehaviour:
   virusInfectSpeed: 0
   currentProcess: 0
   text: {fileID: 6683580035615464140}
+  draggableArea: {fileID: 0}
   fileInfo: {fileID: 0}
 --- !u!114 &5080883368424971255
 MonoBehaviour:
@@ -244,6 +246,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-6808711769710454595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5512415832515189844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf35787e43211ed40bcf24073b6ecb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggableArea: {fileID: 0}
 --- !u!1 &5944648572539897612
 GameObject:
   m_ObjectHideFlags: 0
