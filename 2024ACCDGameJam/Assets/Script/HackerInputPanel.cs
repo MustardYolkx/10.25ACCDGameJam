@@ -13,11 +13,11 @@ public class HackerInputPanel : MonoBehaviour
 
 
     //Call verify prefab
-    public GameObject verifyPrefab;
-    private GameObject activeVerifyInstance;
+    //public GameObject verifyPrefab;
+    //private GameObject activeVerifyInstance;
 
-    public GameObject qteGamePrefab;
-    public GameObject spiningPuzzlePrefab;
+    //public GameObject qteGamePrefab;
+    //public GameObject spiningPuzzlePrefab;
 
 
 
@@ -151,6 +151,8 @@ public class HackerInputPanel : MonoBehaviour
         else if (inputContent.Contains("level") && inputContent.Contains("up") && inputContent.Contains("virus"))
         {
             LevelUpVirus();
+            AddInputToText(currentInputNoEdit, false);
+            ClearInputField();
         }
 
         
@@ -243,8 +245,8 @@ public class HackerInputPanel : MonoBehaviour
     void LevelUpVirus()
     {
         // Load the two mini-game prefabs
-        GameObject miniGame1Prefab = Resources.Load<GameObject>("Prefab/MiniGame1");
-        GameObject miniGame2Prefab = Resources.Load<GameObject>("Prefab/MiniGame2");
+        GameObject miniGame1Prefab = Resources.Load<GameObject>("Prefab/MiniGamePrefeb/MiniGame1");
+        GameObject miniGame2Prefab = Resources.Load<GameObject>("Prefab/MiniGamePrefeb/MiniGame2");
 
         // Randomly select one of the two prefabs
         GameObject selectedMiniGame = (UnityEngine.Random.Range(0, 2) == 0) ? miniGame1Prefab : miniGame2Prefab;
