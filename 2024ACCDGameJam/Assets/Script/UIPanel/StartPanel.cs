@@ -33,6 +33,7 @@ public class StartPanel : BasePanel
         foreach(IsFile f in gameObjects)
         {
             GameRoot.GetInstance().computerFile_Dictionary.Add(f.fileName, f.gameObject);
+            GameRoot.GetInstance().fileNames.Add(f.fileName);
         }
         
 
