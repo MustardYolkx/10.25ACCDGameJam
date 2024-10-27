@@ -152,7 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450f9e4b2d3bb5b40a5e421b43ba705f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileNames: []
+  antiVirusKillingSpeed: 0
   virusOriginSpeed: 0.02
+  cursor: {fileID: 0}
+  idlePos: {fileID: 0}
+  ownerScr: {fileID: 0}
 --- !u!4 &140129807
 Transform:
   m_ObjectHideFlags: 0

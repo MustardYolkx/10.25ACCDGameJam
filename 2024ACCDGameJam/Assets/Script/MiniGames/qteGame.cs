@@ -7,24 +7,21 @@ using TMPro;
 
 public class qteGame : MonoBehaviour
 {
-    public RectTransform pointer; 
+    public RectTransform pointer;
     public RectTransform hitZone;
     public float rotationSpeed = 100f;
     private bool isGameActive = false;
 
     public TextMeshProUGUI completionText; // Reference to the completion text
 
-
-
+    public Image targetImage; // Reference to the image in Canvas that we want to replace on win
+    public Sprite winSprite;  // The new sprite to set on win
 
     public event Action OnMiniGameSuccess;
 
-
-
-
-    private float targetAngle = 90f; 
-    private float tolerance = 5f; 
-    private float hitZoneAngle1 = 45f; 
+    private float targetAngle = 90f;
+    private float tolerance = 5f;
+    private float hitZoneAngle1 = 45f;
     private float hitZoneAngle2 = -45f;
 
     void Start()
@@ -77,12 +74,18 @@ public class qteGame : MonoBehaviour
 
     private void GameSuccess()
     {
-        // 显示胜利文本
+        // Display the victory text
         completionText.gameObject.SetActive(true);
         Debug.Log("win");
 
-        // 触发胜利事件
+        // Trigger the victory event
         OnMiniGameSuccess?.Invoke();
+
+        // Replace the target image with the win sprite if assigned
+        if (targetImage != null && winSprite != null)
+        {
+            targetImage.sprite = winSprite;
+        }
     }
 
     private void GameFailure()

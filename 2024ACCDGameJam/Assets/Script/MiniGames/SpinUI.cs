@@ -1,22 +1,16 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
 
 public class SpinUI : MonoBehaviour
 {
     public List<Button> buttons; // Assign the three buttons in the Inspector
-    private Dictionary<Button, float> originalAngles = new Dictionary<Button, float>();  // Store original rotation angles
-
-
-
+    public List<Sprite> winImages; // Assign replacement images for each button in the Inspector
+    private Dictionary<Button, float> originalAngles = new Dictionary<Button, float>(); // Store original rotation angles
 
     public event Action OnMiniGameSuccess;
-
-
-
     public TextMeshProUGUI completionText;
 
     void Start()
@@ -38,7 +32,6 @@ public class SpinUI : MonoBehaviour
             // Add a click listener to rotate the button
             button.onClick.AddListener(() => RotateButton(button));
         }
-
     }
     private void Update()
     {
@@ -74,6 +67,29 @@ public class SpinUI : MonoBehaviour
     {
         Debug.Log("win!");
         completionText.gameObject.SetActive(true);
+
+        // Replace each button¡¯s specified child with a new image
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            Button button = buttons[i];
+
+            // Find and remove a specific child of the button (e.g., by name)
+            Transform childToRemove = button.transform.Find("C1"); // Replace with the actual name of the child to remove
+            if (childToRemove != null)
+            {
+                Destroy(childToRemove.gameObject); // Delete the specific child
+            }
+
+            // Add a new Image component as a replacement
+            GameObject newImageObject = new GameObject("WinImage");
+            newImageObject.transform.SetParent(button.transform, false);
+            Image newImage = newImageObject.AddComponent<Image>();
+
+            if (i < winImages.Count)
+            {
+                newImage.sprite = winImages[i]; // Set the win image sprite
+            }
+        }
 
         // Invoke the OnMiniGameSuccess event
         OnMiniGameSuccess?.Invoke();
