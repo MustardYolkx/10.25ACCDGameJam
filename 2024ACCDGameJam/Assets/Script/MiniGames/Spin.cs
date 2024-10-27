@@ -2,127 +2,62 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
 
 public class SpinUI : MonoBehaviour
 {
-    public string[] targetObjectNames = { "Object1", "Object2", "Object3" }; // Names of UI elements
-    public float[] targetRotations = { 90f, 180f, 270f }; // Target rotations for each UI element
-    public float rotationSpeed = 100f; // Speed of rotation with mouse
+    public List<Button> buttons; // Assign the three buttons in the Inspector
+    private Dictionary<Button, float> originalAngles = new Dictionary<Button, float>();  // Store original rotation angles
 
-    [Range(0.1f, 5f)]
-    public float tolerance = 2f; // Tolerance for winning rotation check
-
-    private RectTransform[] rotatingObjects; // Array of UI elements as RectTransforms
-    private RectTransform currentObject; // Currently selected UI element
-    private GraphicRaycaster raycaster; // GraphicRaycaster for UI raycasting
-    private EventSystem eventSystem; // EventSystem for UI interaction
+    public TextMeshProUGUI completionText;
 
     void Start()
     {
-        // Set up GraphicRaycaster and EventSystem for Canvas interaction
-        raycaster = FindObjectOfType<GraphicRaycaster>();
-        eventSystem = EventSystem.current;
+        completionText.gameObject.SetActive(false);
 
-        // Initialize rotatingObjects by finding children under this parent
-        rotatingObjects = new RectTransform[targetObjectNames.Length];
-        for (int i = 0; i < targetObjectNames.Length; i++)
+        foreach (Button button in buttons)
         {
-            Transform foundTransform = transform.Find(targetObjectNames[i]);
-            if (foundTransform != null && foundTransform is RectTransform rectTransform)
-            {
-                rotatingObjects[i] = rectTransform;
-            }
-            else
-            {
-                Debug.LogWarning("UI element named " + targetObjectNames[i] + " not found as a child of " + gameObject.name);
-            }
+            // Store each button's original angle (0 degrees)
+            originalAngles[button] = 0f;
+
+            // Set initial rotation of the button to 0 degrees (the original angle)
+            button.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            // Apply a random rotation (0, 90, 180, or 270 degrees) to the button
+            float randomAngle = 90 * Random.Range(0, 4);
+            button.transform.Rotate(0, 0, randomAngle);
+
+            // Add a click listener to rotate the button
+            button.onClick.AddListener(() => RotateButton(button));
         }
+
     }
 
-    void Update()
+    private void RotateButton(Button button)
     {
-        HandleMouseInput();
+        // Rotate the button by 90 degrees
+        button.transform.Rotate(0, 0, 90);
+
+        // Check if the player has won
         CheckWinCondition();
     }
 
-    void HandleMouseInput()
+    private void CheckWinCondition()
     {
-        if (Input.GetMouseButtonDown(0))
+        foreach (Button button in buttons)
         {
-            SelectUIElementUnderMouse();
-        }
+            // Get the current z rotation of the button and normalize it to 0, 90, 180, or 270
+            float currentAngle = button.transform.eulerAngles.z % 360;
+            currentAngle = Mathf.Round(currentAngle / 90) * 90;
 
-        if (Input.GetMouseButton(0) && currentObject != null)
-        {
-            float rotationAmount = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-            Vector3 newRotation = currentObject.localEulerAngles;
-            newRotation.z += rotationAmount;
-            currentObject.localEulerAngles = newRotation;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            currentObject = null;
-        }
-    }
-
-    void SelectUIElementUnderMouse()
-    {
-        PointerEventData pointerData = new PointerEventData(eventSystem)
-        {
-            position = Input.mousePosition
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            RectTransform clickedObject = result.gameObject.GetComponent<RectTransform>();
-            if (clickedObject != null && System.Array.Exists(rotatingObjects, obj => obj == clickedObject))
-            {
-                currentObject = clickedObject;
-                Debug.Log("Selected UI element: " + currentObject.name);
+            // If the current angle does not match the original (0 degrees), return
+            if (currentAngle != originalAngles[button])
                 return;
-            }
         }
-    }
 
-    void CheckWinCondition()
-    {
-        for (int i = 0; i < rotatingObjects.Length; i++)
-        {
-            if (!IsRotationClose(rotatingObjects[i], targetRotations[i]))
-            {
-                return; // Exit if any UI element is not close to its target rotation
-            }
-        }
-        Win();
-    }
-
-    // Called when the player wins
-    void Win()
-    {
-        Debug.Log("You Win!");
-        ChangeColorToGreen(); // Change color of UI elements to green
-    }
-
-    // Change all rotating UI elements to green
-    void ChangeColorToGreen()
-    {
-        foreach (var obj in rotatingObjects)
-        {
-            Image img = obj.GetComponent<Image>();
-            if (img != null)
-            {
-                img.color = Color.green;
-            }
-        }
-    }
-
-    bool IsRotationClose(RectTransform obj, float targetRotation)
-    {
-        float angle = Mathf.Abs(Mathf.DeltaAngle(obj.localEulerAngles.z, targetRotation));
-        return angle <= tolerance;
+        // If all buttons match their original angles, the game is won
+        Debug.Log("win!");
+        completionText.gameObject.SetActive(true);
+       
     }
 }

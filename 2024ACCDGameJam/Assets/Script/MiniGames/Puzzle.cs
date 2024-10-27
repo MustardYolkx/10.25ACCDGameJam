@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class RandomCodeGame : MonoBehaviour
 {
@@ -8,11 +9,15 @@ public class RandomCodeGame : MonoBehaviour
     private string generatedCode; // The random code generated
     private TextMeshProUGUI codeDisplay; // The text component for displaying the code
 
+    public TextMeshProUGUI completionText;
+
     void Start()
     {
         codeDisplay = GetComponent<TextMeshProUGUI>(); // Get the TextMeshProUGUI component
         GenerateCode();
         playerInput.onSubmit.AddListener(delegate { CheckInput(); });
+
+        completionText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -45,6 +50,7 @@ public class RandomCodeGame : MonoBehaviour
         if (playerInput.text.ToUpper() == generatedCode)
         {
             Debug.Log("You win!");
+            completionText.gameObject.SetActive(true);
         }
         else
         {
