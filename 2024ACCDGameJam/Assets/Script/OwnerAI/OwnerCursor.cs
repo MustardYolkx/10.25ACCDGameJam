@@ -81,7 +81,16 @@ public class OwnerCursor : MonoBehaviour
             }
             else
             {
-                ownerAI.OpenTargetFile();
+                if (GameRoot.GetInstance().currentOpenFile_Dictionary.Count == 0)
+                {
+                    ownerAI.OpenTargetFile();
+
+                }
+                else
+                {
+                    ownerAI.ClosePageCursor();
+                    ownerAI.isFileOpen = true;
+                }
                 
             }
             

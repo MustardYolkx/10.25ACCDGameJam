@@ -15,10 +15,14 @@ public class GameRoot : MonoBehaviour
     public Dictionary<string, GameObject> currentOpenFile_Dictionary = new Dictionary<string, GameObject>();
     public Dictionary<string, GameObject> computerFile_Dictionary = new Dictionary<string, GameObject>();
 
+    public float antiVirusKillingSpeed = 0f;
+
     public float virusOriginSpeed = 0.1f;
 
     public GameObject cursor;
     public Transform idlePos;
+
+    public OwnerAI ownerScr;
     public static GameRoot GetInstance()
     {
         if(instance == null)
@@ -41,7 +45,7 @@ public class GameRoot : MonoBehaviour
         }
 
         uiManager = new UI_Manager();
-        
+        ownerScr= FindObjectOfType<OwnerAI>();
     }
 
     private void Start()

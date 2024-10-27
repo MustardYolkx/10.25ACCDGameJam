@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AntivirusSystem : MonoBehaviour
 {
-    public float antivirusSpeed = 5f; // The infection progress reduced by each antivirus. !!!Modify it!!!
+    public float antivirusSpeed = 1f; // The infection progress reduced by each antivirus. !!!Modify it!!!
 
     public bool isAntivirusRunning = false; // Mark whether it is running
 
@@ -35,12 +35,14 @@ public class AntivirusSystem : MonoBehaviour
             {
                 currentTarget = fileEntry;
 
+                GameRoot.GetInstance().antiVirusKillingSpeed += antivirusSpeed;
+
                 // Gradually reduce the progress of infection
                 while (fileComponent.currentProcess > 0)
                 {
                     yield return new WaitForEndOfFrame();
 
-                    fileComponent.currentProcess -= antivirusSpeed * Time.deltaTime;
+                    fileComponent.currentProcess -= GameRoot.GetInstance().antiVirusKillingSpeed += antivirusSpeed * Time.deltaTime;
 
                     //Make sure progress doesn't drop to negative values
                     if (fileComponent.currentProcess < 0)
@@ -51,6 +53,7 @@ public class AntivirusSystem : MonoBehaviour
 
                 // Clear virus markers
                 fileComponent.hasVirus = false;
+                GameRoot.GetInstance().antiVirusKillingSpeed -= antivirusSpeed;
                 currentTarget = null;
             }
         }
