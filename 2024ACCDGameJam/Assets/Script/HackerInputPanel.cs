@@ -42,7 +42,7 @@ public class HackerInputPanel : MonoBehaviour
         });
 
 
-        RegisterMethod("openunity", new Action(OpenUnity));
+        //RegisterMethod("openunity", new Action(OpenPanel));
         //RegisterMethod("closepage", new Action(() => { ClosePage(currentFileName); }));
     }
     private void OnInputValueChanged(string value)
@@ -76,8 +76,8 @@ public class HackerInputPanel : MonoBehaviour
                 Debug.Log(content);
                 
             }
-            
-            InvokeByDictionary(content);
+            OpenPanel(inputContent[1]);
+            //InvokeByDictionary(content);
             AddInputToText(currentInputNoEdit, true);
             ClearInputField();
         }
@@ -217,11 +217,11 @@ public class HackerInputPanel : MonoBehaviour
         return null;
     }
     #endregion
-    private void OpenUnity()
+    private void OpenPanel(string name)
     {
-        GameObject UnityPanel = Resources.Load<GameObject>("UIPanel/UnityPanel");
-        GameObject unityPage = Instantiate(UnityPanel, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
-        GameRoot.GetInstance().currentOpenFile_Dictionary.Add(unityPage.GetComponent<PageInfo>().fileName, unityPage);
+        GameObject tagetPanel = Resources.Load<GameObject>("UIPanel/"+name+"Panel");
+        GameObject pageOBJ = Instantiate(tagetPanel, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+        GameRoot.GetInstance().currentOpenFile_Dictionary.Add(pageOBJ.GetComponent<PageInfo>().fileName, pageOBJ);
         
         //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());
         //Scene2 scene2 = new Scene2();

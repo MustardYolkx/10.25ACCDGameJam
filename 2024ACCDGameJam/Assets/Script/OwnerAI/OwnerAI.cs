@@ -37,6 +37,12 @@ public class OwnerAI : MonoBehaviour
     public GameRoot gameRoot;
     public Animator animator;
 
+    [Header("Cursor")]
+    public OwnerCursor cursor;
+    public string currentTargetFile;
+    private float timeDuration;
+    private bool timeStart = true;
+    [HideInInspector]public bool isFileOpen;
     void Start()
     {
         currentState = OwnerStates.AFK;
@@ -65,6 +71,32 @@ public class OwnerAI : MonoBehaviour
                 UpdateActive(); break;
             case OwnerStates.OnAlert:
                 UpdateOnAlert(); break;
+        }
+
+        if (timeStart)
+        {
+            timeDuration += Time.deltaTime;
+        }
+        if(currentState == OwnerStates.Active)
+        {
+           
+            if (timeDuration > Random.Range(2,4))
+            {
+                if(isFileOpen)
+                {
+                    ClosePageCursor();
+                }
+                else
+                {
+                    if (currentTargetFile == "")
+                    {
+
+                         RandomTargetFile();
+                    }
+                    
+                    
+                }
+            }
         }
     }
 
@@ -178,15 +210,75 @@ public class OwnerAI : MonoBehaviour
         // switch to active state after random interval of time
         yield return new WaitForSeconds(Random.Range(minAFKTime, maxAFKTime));
 
+        timeDuration = 0;
+        timeStart = true;
+
+
         animator.SetTrigger("Active");
+
         currentState = OwnerStates.Active;
     }
     public IEnumerator SwitchToAFKCoroutine() 
     {
         yield return new WaitForSeconds(Random.Range(minActiveTime, maxAFKTime));
 
+        if (isFileOpen)
+        {
+            ClosePageCursor();
+        }
+
+
         animator.SetTrigger("AFK");
+
         currentState = OwnerStates.AFK;
     }
     #endregion
+
+    public void RandomTargetFile()
+    {
+        timeStart = false;
+        currentTargetFile = gameRoot.fileNames[Random.Range(0, gameRoot.fileNames.Count)];
+        GameObject targetFile = gameRoot.computerFile_Dictionary[gameRoot.fileNames[Random.Range(0, gameRoot.fileNames.Count)]];
+        cursor.ownerAI = this;
+        cursor.targetTransform = targetFile.transform;
+        cursor.cursorState = OwnerCursor.CursorState.MovetoFile;
+        
+    }
+
+    public void OpenTargetFile()
+    {        
+        GameObject UnityPanel = Resources.Load<GameObject>("UIPanel/"+ currentTargetFile+"Panel");
+        GameObject unityPage = Instantiate(UnityPanel, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+        GameRoot.GetInstance().currentOpenFile_Dictionary.Add(unityPage.GetComponent<PageInfo>().fileName, unityPage);
+        timeDuration= 0;
+        cursor.StartCoroutine(cursor.StayForAWhile());
+        cursor.targetTransform = cursor.idlePos;
+        isFileOpen = true;
+        timeStart = true;
+    }
+
+    private void ClosePageCursor()
+    {
+        Transform cursorTargetPos =  GameRoot.GetInstance().currentOpenFile_Dictionary[currentTargetFile].transform.Find("Close");
+        cursor.targetTransform = cursorTargetPos;
+        cursor.cursorState= OwnerCursor.CursorState.MovetoFile;
+        timeStart= false;
+        timeDuration = 0;
+    }
+    public void ClosePage()
+    {
+        cursor.StartCoroutine(cursor.StayForAWhile());
+        Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[currentTargetFile]);
+        GameRoot.GetInstance().currentOpenFile_Dictionary.Remove(currentTargetFile);
+        currentTargetFile = "";
+        isFileOpen= false;
+        //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());
+        //Scene2 scene2 = new Scene2();
+        //GameRoot.GetInstance().SceneControl_Root.LoadScene(scene2.SceneName, scene2);
+    }
+
+    public void UpdateTargetFile()
+    {
+        
+    }
 }
