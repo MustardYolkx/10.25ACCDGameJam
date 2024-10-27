@@ -172,9 +172,9 @@ public class HackerInputPanel : MonoBehaviour
     public void InfectVirus(string content)
     {
 
-        Sprite targetSprite = Resources.Load<Sprite>("Sprite/" + content + "_Virus");
+        Sprite targetSprite = Resources.Load<Sprite>("Sprite/Icon/" + content + "_Virus");
         GameRoot.GetInstance().computerFile_Dictionary[content].GetComponentInChildren<IsFile>().hasVirus = true;
-        GameRoot.GetInstance().computerFile_Dictionary[content].GetComponentInChildren<Image>().sprite = targetSprite;
+        GameRoot.GetInstance().computerFile_Dictionary[content].GetComponent<Image>().sprite = targetSprite;
         
     }
     public void AddInputToText(string content,bool isCorrect)

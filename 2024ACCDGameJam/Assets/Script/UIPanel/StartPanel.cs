@@ -27,7 +27,7 @@ public class StartPanel : BasePanel
     {
         base.OnStart();
         UI_Method.GetInstance().GetOrAddComponentInChild<DoubleClickButton>(ActiveObj, "Unity_DoubleClickButton").OnDoubleClick.AddListener(OpenUnity);
-        UI_Method.GetInstance().GetOrAddComponentInChild<Button>(ActiveObj, "MyFile").onClick.AddListener(OpenMyFile);
+        //UI_Method.GetInstance().GetOrAddComponentInChild<Button>(ActiveObj, "MyFile").onClick.AddListener(OpenMyFile);
 
         IsFile[] gameObjects =ActiveObj.GetComponentsInChildren<IsFile>();
         foreach(IsFile f in gameObjects)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PageInfo : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PageInfo : MonoBehaviour
     private GameObject virusProcess;
 
     public IsFile fileInfo;
+
+    public Image virusPage;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +30,11 @@ public class PageInfo : MonoBehaviour
                 fileInfo = GameRoot.GetInstance().computerFile_Dictionary[name].GetComponent<IsFile>();
             }
         }
-        
+        if (transform.Find("VirusPage") != null)
+        {
+
+             virusPage = transform.Find("VirusPage").GetComponent<Image>();
+        }
         
     }
 
@@ -38,5 +45,11 @@ public class PageInfo : MonoBehaviour
         text.text = (fileInfo.currentProcess*100).ToString("0");
 
         hasVirus = fileInfo.hasVirus;
+
+        if(virusPage != null)
+        {
+            virusPage.fillAmount = fileInfo.currentProcess / 1;
+
+        }
     }
 }

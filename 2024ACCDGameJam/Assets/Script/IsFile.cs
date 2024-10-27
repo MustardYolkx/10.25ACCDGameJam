@@ -49,6 +49,10 @@ public class IsFile : MonoBehaviour
         else if(currentProcess >1)
         {
             currentProcess = 1;
+
+            Sprite targetSprite = Resources.Load<Sprite>("Sprite/Icon/" + fileName + "_Virus");
+          
+            GameRoot.GetInstance().computerFile_Dictionary[fileName].GetComponent<Image>().sprite = targetSprite;
         }
     }
 }
