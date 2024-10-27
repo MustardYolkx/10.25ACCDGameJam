@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
@@ -8,6 +9,13 @@ public class SpinUI : MonoBehaviour
 {
     public List<Button> buttons; // Assign the three buttons in the Inspector
     private Dictionary<Button, float> originalAngles = new Dictionary<Button, float>();  // Store original rotation angles
+
+
+
+
+    public event Action OnMiniGameSuccess;
+
+
 
     public TextMeshProUGUI completionText;
 
@@ -24,7 +32,7 @@ public class SpinUI : MonoBehaviour
             button.transform.rotation = Quaternion.Euler(0, 0, 0);
 
             // Apply a random rotation (0, 90, 180, or 270 degrees) to the button
-            float randomAngle = 90 * Random.Range(0, 4);
+            float randomAngle = 90 * UnityEngine.Random.Range(0, 4);
             button.transform.Rotate(0, 0, randomAngle);
 
             // Add a click listener to rotate the button
@@ -58,6 +66,8 @@ public class SpinUI : MonoBehaviour
         // If all buttons match their original angles, the game is won
         Debug.Log("win!");
         completionText.gameObject.SetActive(true);
-       
+
+        OnMiniGameSuccess?.Invoke();
+
     }
 }

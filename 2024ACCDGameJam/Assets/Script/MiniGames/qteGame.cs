@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,14 @@ public class qteGame : MonoBehaviour
     private bool isGameActive = false;
 
     public TextMeshProUGUI completionText; // Reference to the completion text
+
+
+
+
+    public event Action OnMiniGameSuccess;
+
+
+
 
     private float targetAngle = 90f; 
     private float tolerance = 5f; 
@@ -70,6 +79,7 @@ public class qteGame : MonoBehaviour
         isGameActive = false;
         completionText.gameObject.SetActive(true); // Show the success message
         Debug.Log("Win");
+        OnMiniGameSuccess?.Invoke();
     }
 
     private void GameFailure()
