@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AntivirusSystem : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class AntivirusSystem : MonoBehaviour
             IsFile fileComponent = fileEntry.GetComponent<PageInfo>().fileInfo;
 
             // Check if the file is currently infected
-            if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 /*&& fileComponent.currentProcess < 1*/)
+            if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 && fileComponent.currentProcess < 1)
             {
                 currentTarget = fileEntry;
 
@@ -53,8 +54,10 @@ public class AntivirusSystem : MonoBehaviour
 
                 // Clear virus markers
                 fileComponent.hasVirus = false;
-                
-                
+                string content = fileComponent.fileName;
+                Sprite targetSprite = Resources.Load<Sprite>("Sprite/Icon/" + content);
+                GameRoot.GetInstance().computerFile_Dictionary[content].GetComponentInChildren<IsFile>().hasVirus = false;
+                GameRoot.GetInstance().computerFile_Dictionary[content].GetComponent<Image>().sprite = targetSprite;
                 currentTarget = null;
             }
             //Destroy(GameRoot.GetInstance().currentOpenFile_Dictionary[fileComponent.fileName]);

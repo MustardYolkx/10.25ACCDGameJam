@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: -544722655425582134}
   - component: {fileID: 4711166415614373577}
   m_Layer: 5
-  m_Name: unityPanel
+  m_Name: listPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,8 +174,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 533, y: -15.2167}
-  m_SizeDelta: {x: 661.3211, y: 334.4373}
+  m_AnchoredPosition: {x: 451.3047, y: 7.8691}
+  m_SizeDelta: {x: 415.4533, y: 561.5366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5761121924683142219
 CanvasRenderer:
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25f98a192be7164abb7df030ad72466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: unity
+  fileName: list
   hasVirus: 0
   virusInfectSpeed: 0
   currentProcess: 0
