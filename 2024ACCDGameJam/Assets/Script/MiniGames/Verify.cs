@@ -1,15 +1,25 @@
 using System.Collections;
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class RandomCodeGame : MonoBehaviour
+public class Verify : MonoBehaviour
 {
     public TMP_InputField playerInput; // Reference to the input field
     private string generatedCode; // The random code generated
     private TextMeshProUGUI codeDisplay; // The text component for displaying the code
 
     public TextMeshProUGUI completionText;
+
+
+
+    //link to hacker input
+    public event Action OnVerificationComplete;
+
+
+
+
 
     void Start()
     {
@@ -38,7 +48,7 @@ public class RandomCodeGame : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            generatedCode += chars[Random.Range(0, chars.Length)];
+            generatedCode += chars[UnityEngine.Random.Range(0, chars.Length)];
         }
 
         codeDisplay.text = generatedCode;
@@ -51,6 +61,7 @@ public class RandomCodeGame : MonoBehaviour
         {
             Debug.Log("You win!");
             completionText.gameObject.SetActive(true);
+            OnVerificationComplete?.Invoke();
         }
         else
         {

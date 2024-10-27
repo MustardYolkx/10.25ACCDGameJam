@@ -11,6 +11,19 @@ public class HackerInputPanel : MonoBehaviour
 
     public RectTransform rootVirusInstantiatePos;
 
+
+    //Call verify prefab
+    public GameObject verifyPrefab;
+    private GameObject activeVerifyInstance;
+
+    public GameObject qteGamePrefab;
+    public GameObject spiningPuzzlePrefab;
+
+
+
+
+
+
     public bool gotARootVirus;
     private string currentInput;
     private string currentInputNoEdit;
@@ -94,12 +107,24 @@ public class HackerInputPanel : MonoBehaviour
                     {
                         AddInputToText(currentInputNoEdit, true);
                         ClearInputField();
-                        //InstantiateAProcessBar
-                        GameObject processBar = Resources.Load<GameObject>("Prefab/VirusInstallProcessBar");
-                        GameObject bar = Instantiate(processBar,GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
-                        bar.GetComponent<VirusInstallProcessBar_UI>().hackerInput = this;
-                        bar.GetComponent<VirusInstallProcessBar_UI>().contentFromHackInput = name;
-                        //InfectVirus(name);
+
+                        //generate verify prefab
+                        GameObject verifyPrefab = Resources.Load<GameObject>("Prefab/VerifyPrefab");
+                        GameObject verifyInstance = Instantiate(verifyPrefab, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+
+
+                        
+                        verifyInstance.GetComponent<Verify>().OnVerificationComplete += () =>
+                        {
+                            // delete verify prefab
+                            Destroy(verifyInstance);
+
+                            //InstantiateAProcessBar
+                            GameObject processBar = Resources.Load<GameObject>("Prefab/VirusInstallProcessBar");
+                            GameObject bar = Instantiate(processBar, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+                            bar.GetComponent<VirusInstallProcessBar_UI>().hackerInput = this;
+                            bar.GetComponent<VirusInstallProcessBar_UI>().contentFromHackInput = name;
+                        };
                     }
                 }
             }
@@ -121,6 +146,16 @@ public class HackerInputPanel : MonoBehaviour
             AddInputToText(currentInputNoEdit, true);
             ClearInputField();
         }
+
+        //level up virus, call minigames
+        else if (inputContent.Contains("level") && inputContent.Contains("up") && inputContent.Contains("virus"))
+        {
+            LevelUpVirus();
+        }
+
+        
+
+
         else
         {
             AddInputToText(currentInputNoEdit,false);
@@ -201,5 +236,23 @@ public class HackerInputPanel : MonoBehaviour
         //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());
         //Scene2 scene2 = new Scene2();
         //GameRoot.GetInstance().SceneControl_Root.LoadScene(scene2.SceneName, scene2);
+    }
+
+
+
+    void LevelUpVirus()
+    {
+        // Load the two mini-game prefabs
+        GameObject miniGame1Prefab = Resources.Load<GameObject>("Prefab/MiniGame1");
+        GameObject miniGame2Prefab = Resources.Load<GameObject>("Prefab/MiniGame2");
+
+        // Randomly select one of the two prefabs
+        GameObject selectedMiniGame = (UnityEngine.Random.Range(0, 2) == 0) ? miniGame1Prefab : miniGame2Prefab;
+
+        // Instantiate the selected mini-game on the UI canvas
+        GameObject miniGameInstance = Instantiate(selectedMiniGame, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+
+        // Configure any mini-game-specific initialization here if needed
+        Debug.Log("Mini-game triggered by level up virus command.");
     }
 }

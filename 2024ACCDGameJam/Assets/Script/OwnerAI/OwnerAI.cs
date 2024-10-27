@@ -35,6 +35,7 @@ public class OwnerAI : MonoBehaviour
     [Header("References")]
     public AntivirusSystem antivirusSystem;
     public GameRoot gameRoot;
+    public Animator animator;
 
     [Header("Cursor")]
     public OwnerCursor cursor;
@@ -53,6 +54,10 @@ public class OwnerAI : MonoBehaviour
         if ( gameRoot == null)
         {
             gameRoot = GameRoot.GetInstance();
+        }
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
         }
     }
 
@@ -139,6 +144,7 @@ public class OwnerAI : MonoBehaviour
         else 
         {
             Debug.Log("Owner is on alert!!!");
+            animator.SetTrigger("Alert");
             currentState = OwnerStates.OnAlert;
         }
     }
@@ -190,6 +196,7 @@ public class OwnerAI : MonoBehaviour
         }
         else
         {
+            animator.SetTrigger("Active");
             currentState = OwnerStates.Active;
             Debug.Log("antivirus finished running");
 
@@ -202,17 +209,27 @@ public class OwnerAI : MonoBehaviour
     {
         // switch to active state after random interval of time
         yield return new WaitForSeconds(Random.Range(minAFKTime, maxAFKTime));
+
         timeDuration = 0;
         timeStart = true;
+
+
+        animator.SetTrigger("Active");
+
         currentState = OwnerStates.Active;
     }
     public IEnumerator SwitchToAFKCoroutine() 
     {
         yield return new WaitForSeconds(Random.Range(minActiveTime, maxAFKTime));
+
         if (isFileOpen)
         {
             ClosePageCursor();
         }
+
+
+        animator.SetTrigger("AFK");
+
         currentState = OwnerStates.AFK;
     }
     #endregion

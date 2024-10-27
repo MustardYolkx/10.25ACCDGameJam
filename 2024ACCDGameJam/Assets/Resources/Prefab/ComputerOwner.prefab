@@ -149,7 +149,7 @@ MonoBehaviour:
   currentState: 0
   minAFKTime: 5
   maxAFKTime: 10
-  minActiveTime: 10
+  minActiveTime: 5
   maxActiveTime: 10
-  isOnAlert: 0
   antivirusSystem: {fileID: 0}
+  gameRoot: {fileID: 0}
