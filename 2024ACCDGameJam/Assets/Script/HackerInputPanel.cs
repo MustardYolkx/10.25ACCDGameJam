@@ -109,7 +109,7 @@ public class HackerInputPanel : MonoBehaviour
                         ClearInputField();
 
                         //generate verify prefab
-                        GameObject verifyPrefab = Resources.Load<GameObject>("Prefab/VerifyPrefab");
+                        GameObject verifyPrefab = Resources.Load<GameObject>("Prefab/MiniGamePrefeb/weaVerifyPrefab");
                         GameObject verifyInstance = Instantiate(verifyPrefab, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
 
 
@@ -254,7 +254,36 @@ public class HackerInputPanel : MonoBehaviour
         // Instantiate the selected mini-game on the UI canvas
         GameObject miniGameInstance = Instantiate(selectedMiniGame, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
 
-        // Configure any mini-game-specific initialization here if needed
-        Debug.Log("Mini-game triggered by level up virus command.");
+        if (selectedMiniGame == miniGame1Prefab)
+        {
+            qteGame qteScript = miniGameInstance.GetComponent<qteGame>();
+            qteScript.OnMiniGameSuccess += () =>
+            {
+                StartCoroutine(DestroyMiniGameInstanceWithDelay(miniGameInstance));
+                SpeedUpInfection();
+            };
+        }
+        else if (selectedMiniGame == miniGame2Prefab)
+        {
+            SpinUI spinScript = miniGameInstance.GetComponent<SpinUI>();
+            spinScript.OnMiniGameSuccess += () =>
+            {
+                StartCoroutine(DestroyMiniGameInstanceWithDelay(miniGameInstance));
+                SpeedUpInfection();
+            };
+        }
+    }
+
+    private IEnumerator DestroyMiniGameInstanceWithDelay(GameObject miniGameInstance)
+    {
+        yield return new WaitForSeconds(1f); // wait 1 sec
+        Destroy(miniGameInstance);
+    }
+
+
+    void SpeedUpInfection()
+    {
+        Debug.Log("Infection sped up for the current file!");
+        // 加速感染过程
     }
 }
