@@ -5,7 +5,9 @@ using UnityEngine;
 public class AntivirusSystem : MonoBehaviour
 {
     public float antivirusSpeed = 5f; // The infection progress reduced by each antivirus. !!!Modify it!!!
-    private bool isAntivirusRunning = false; // Mark whether it is running
+
+    public bool isAntivirusRunning = false; // Mark whether it is running
+
     private GameObject currentTarget = null; // Current target file
 
     public void RunAntivirus(Dictionary<string, GameObject> computerFileDictionary)
@@ -21,33 +23,45 @@ public class AntivirusSystem : MonoBehaviour
     {
         isAntivirusRunning = true;
 
+        Dictionary<string, GameObject>.ValueCollection valueColl = computerFileDictionary.Values;
+
         // Traverse all files and look for infected files
-        foreach (var fileEntry in computerFileDictionary)
+        foreach (GameObject fileEntry in valueColl)
         {
-            var fileObject = fileEntry.Value;
-            var fileComponent = fileObject.GetComponent<IsFile>();
+            IsFile fileComponent = fileEntry.GetComponent<IsFile>();
 
             // Check if the file is currently infected
             if (fileComponent != null && fileComponent.hasVirus && fileComponent.currentProcess > 0 && fileComponent.currentProcess < 1)
             {
-                currentTarget = fileObject;
+                currentTarget = fileEntry;
 
                 // Gradually reduce the progress of infection
                 while (fileComponent.currentProcess > 0)
                 {
+                    yield return new WaitForEndOfFrame();
+
                     fileComponent.currentProcess -= antivirusSpeed * Time.deltaTime;
 
                     //Make sure progress doesn't drop to negative values
                     if (fileComponent.currentProcess < 0)
                         fileComponent.currentProcess = 0;
 
-                    yield return null; // Update every frame
+                    //yield return null; // Update every frame
                 }
 
                 // Clear virus markers
                 fileComponent.hasVirus = false;
                 currentTarget = null;
             }
+        }
+        OwnerAI ownerAI = FindObjectOfType<OwnerAI>().GetComponent<OwnerAI>();
+        if (ownerAI != null) 
+        { 
+            ownerAI.AntivirusTaskCompleted(true);
+        }
+        else
+        {
+            Debug.Log("ownerAI script not found!");
         }
 
         isAntivirusRunning = false; // Complete the check and turn off the antivirus system

@@ -29,17 +29,25 @@ public class OwnerAI : MonoBehaviour
     public float maxActiveTime;
 
     // misc
-    [Header("Alerted Variables")]
-    public bool isOnAlert;
+    //[Header("Alerted Variables")]
+    //public bool isOnAlert;
 
-    //[Header("misc unlabled")]
-    //private List<Application> apps = new List<Application>();
-
-    // list of favorite applications
+    [Header("References")]
+    public AntivirusSystem antivirusSystem;
+    public GameRoot gameRoot;
 
     void Start()
     {
         currentState = OwnerStates.AFK;
+
+        if ( antivirusSystem == null)
+        {
+            antivirusSystem = FindObjectOfType<AntivirusSystem>();
+        }
+        if ( gameRoot == null)
+        {
+            gameRoot = GameRoot.GetInstance();
+        }
     }
 
     void Update()
@@ -81,60 +89,83 @@ public class OwnerAI : MonoBehaviour
             switchToActiveCoroutine = null;
         }
 
-        // if owner isnt alerted to something goin on, proceed with usual routine
-        if (!isOnAlert)
-        {
-            CheckOpenApplications();
+        // check if virus is running (visibly)
+        IsVirusRunning();
 
-            // start timer to switch
+        // if owner isnt alerted to something goin on, proceed with usual routine
+        if (!IsVirusRunning())
+        {
+            // start timer to switch back to AFK
             if (switchToAFKCoroutine == null)
             {
                 Debug.Log("Current State:" + currentState.ToString());
                 switchToAFKCoroutine= StartCoroutine(SwitchToAFKCoroutine());
             }
+
+            // do regular business
         }
         else 
         {
             Debug.Log("Owner is on alert!!!");
             currentState = OwnerStates.OnAlert;
         }
-
-        // if an application is open...
-
-        // if an application is not open...
     }
     private void UpdateOnAlert()
     {
-        // when owner notices something up with the computer, switch to this state
-
         // activate antivirus software
+        antivirusSystem.RunAntivirus(gameRoot.computerFile_Dictionary);
     }
-
-    private void CheckOpenApplications()
+    // functional yaaaaaay party
+    private bool IsVirusRunning()
     {
-        // gets list of the applications open
-        List<Application> apps = new List<Application>();
+        //GameRoot gameRoot = GameRoot.GetInstance();
+        bool virusFound = false;
 
-        Application[] openApps = FindObjectsOfType<Application>();
-        foreach (Application openApp in openApps) 
-        { 
-            apps.Add(openApp);
-        }
-
-        if (apps.Count > 2) 
+        if (gameRoot.currentOpenFile_Dictionary != null)
         {
-            while (apps.Count > 1)
-            {
-                // get last app in list
-                Application app = apps.First();
+            Dictionary<string, GameObject>.ValueCollection valueColl = gameRoot.currentOpenFile_Dictionary.Values;
 
-                app.gameObject.SetActive(false);
-                apps.Remove(app);
+            // Traverse all files and look for infected files (cannot access foreach loop)
+            foreach (GameObject entry in valueColl)
+            {
+                //GameObject fileObject = entry;
+                PageInfo fileComponent = entry.GetComponent<PageInfo>();
+
+                if (fileComponent == null)
+                {
+                    Debug.Log("fileComponent null!! cannot find PageInfo script");
+                }
+
+                // Check if the file is currently infected
+                if (fileComponent != null && fileComponent.fileInfo.hasVirus)
+                {
+                    virusFound = true;
+                }
+                else { virusFound = false; }
             }
+
+            if (virusFound) {Debug.Log("virus detected---return true"); return true; }    
+            else { return false; }
+        }
+        else { return false; }
+    }
+
+    public void AntivirusTaskCompleted(bool taskComplete)
+    {
+        if (!taskComplete) 
+        {
+            return;
+        }
+        else
+        {
+            currentState = OwnerStates.Active;
+            Debug.Log("antivirus finished running");
+
+            taskComplete = false;
         }
     }
 
-    // coroutines
+    # region coroutines
     public IEnumerator SwitchToActiveCoroutine()
     {
         // switch to active state after random interval of time
@@ -148,4 +179,5 @@ public class OwnerAI : MonoBehaviour
 
         currentState = OwnerStates.AFK;
     }
+    #endregion
 }
