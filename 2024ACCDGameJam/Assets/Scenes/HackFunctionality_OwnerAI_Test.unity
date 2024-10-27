@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   antivirusSpeed: 5
+  isAntivirusRunning: 0
 --- !u!1 &225061095
 GameObject:
   m_ObjectHideFlags: 0
