@@ -63,11 +63,16 @@ public class SpinUI : MonoBehaviour
                 return;
         }
 
-        // If all buttons match their original angles, the game is won
+        // If all buttons match their original angles, call GameSuccess
+        GameSuccess();
+    }
+
+    private void GameSuccess()
+    {
         Debug.Log("win!");
         completionText.gameObject.SetActive(true);
 
+        // Invoke the OnMiniGameSuccess event
         OnMiniGameSuccess?.Invoke();
-
     }
 }
