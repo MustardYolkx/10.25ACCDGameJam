@@ -154,10 +154,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fileNames: []
   antiVirusKillingSpeed: 0
+  isAntiSystemKilling: 0
   virusOriginSpeed: 0.02
+  antivirusSystem: {fileID: 0}
   cursor: {fileID: 0}
   idlePos: {fileID: 0}
   ownerScr: {fileID: 0}
+  entireProcess: 0
+  file_List: []
 --- !u!4 &140129807
 Transform:
   m_ObjectHideFlags: 0
