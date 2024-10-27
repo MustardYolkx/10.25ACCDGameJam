@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fcac4c71bec6c9498763e06100843fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: unity
+  fileName: nity
   hasVirus: 0
   virusInfectSpeed: 1
   currentProcess: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 4e4b089e3c1112b4eb6d1e86c65201a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e66c7dd3740eb3e44a1421f53f93abc2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -452,8 +452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -73.59999}
+  m_SizeDelta: {x: 0, y: -73.5847}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2040366673660835150
 CanvasRenderer:
@@ -483,17 +483,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Unity
+  m_text: Nity
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ddc2a09f314f2eb43a8cf65c2a50defb, type: 2}
+  m_sharedMaterial: {fileID: -2188882156825667366, guid: ddc2a09f314f2eb43a8cf65c2a50defb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1602,8 +1602,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -0.31863, y: 0.31862}
+  m_SizeDelta: {x: 111.86, y: 111.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3975014058533385282
 CanvasRenderer:
@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9095717837082945937, guid: ba9524543067dc441bbf80d77f1eb99a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 553edd56c35ba894da96176ae26a2e8c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

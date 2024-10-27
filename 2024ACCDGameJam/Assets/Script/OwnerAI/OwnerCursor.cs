@@ -43,7 +43,14 @@ public class OwnerCursor : MonoBehaviour
         }
         else
         {
-            MoveCursor(idlePos);
+            if(ownerAI.currentState == OwnerAI.OwnerStates.AFK)
+            {
+                
+            }
+            else
+            {
+                MoveCursor(idlePos);
+            }
         }
 
         transform.SetAsLastSibling();
