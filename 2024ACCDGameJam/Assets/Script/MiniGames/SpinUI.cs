@@ -89,6 +89,20 @@ public class SpinUI : MonoBehaviour
             {
                 newImage.sprite = winImages[i]; // Set the win image sprite
             }
+
+            RectTransform rectTransform = newImageObject.GetComponent<RectTransform>();
+            if (i == 0)
+            {
+                rectTransform.sizeDelta = new Vector2(154.2f, 290.62f); 
+            }
+            else if (i == 1)
+            {
+                rectTransform.sizeDelta = new Vector2(135.4f, 149.5f); 
+            }
+            else if (i == 2)
+            {
+                rectTransform.sizeDelta = new Vector2(100f, 167.5f); 
+            }
         }
 
         // Invoke the OnMiniGameSuccess event
