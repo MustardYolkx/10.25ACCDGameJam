@@ -80,6 +80,7 @@ public class HackerInputPanel : MonoBehaviour
             //InvokeByDictionary(content);
             AddInputToText(currentInputNoEdit, true);
             ClearInputField();
+            CheckIfBeCatchedByOwner();
         }
         else if (inputContent.Contains("copy")&& inputContent.Contains("rootvirus"))
         {
@@ -107,7 +108,7 @@ public class HackerInputPanel : MonoBehaviour
                     {
                         AddInputToText(currentInputNoEdit, true);
                         ClearInputField();
-
+                        CheckIfBeCatchedByOwner();
                         //generate verify prefab
                         GameObject verifyPrefab = Resources.Load<GameObject>("Prefab/VerifyPrefab");
                         GameObject verifyInstance = Instantiate(verifyPrefab, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
@@ -145,6 +146,7 @@ public class HackerInputPanel : MonoBehaviour
             ClosePage(inputContent[1]);
             AddInputToText(currentInputNoEdit, true);
             ClearInputField();
+            CheckIfBeCatchedByOwner();
         }
 
         //level up virus, call minigames
@@ -154,8 +156,6 @@ public class HackerInputPanel : MonoBehaviour
             AddInputToText(currentInputNoEdit, false);
             ClearInputField();
         }
-
-        
 
 
         else
@@ -223,6 +223,7 @@ public class HackerInputPanel : MonoBehaviour
     {
         GameObject tagetPanel = Resources.Load<GameObject>("UIPanel/"+name+"Panel");
         GameObject pageOBJ = Instantiate(tagetPanel, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
+        pageOBJ.GetComponent<PageInfo>().fileInfo = GameRoot.GetInstance().computerFile_Dictionary[name].GetComponent<IsFile>();
         GameRoot.GetInstance().currentOpenFile_Dictionary.Add(pageOBJ.GetComponent<PageInfo>().fileName, pageOBJ);
         
         //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());
@@ -240,7 +241,13 @@ public class HackerInputPanel : MonoBehaviour
         //GameRoot.GetInstance().SceneControl_Root.LoadScene(scene2.SceneName, scene2);
     }
 
-
+    public void CheckIfBeCatchedByOwner()
+    {
+        if(GameRoot.GetInstance().ownerScr.currentState == OwnerAI.OwnerStates.Active)
+        {
+            GameRoot.GetInstance().ownerScr.SpeedUpAntiVirusSystem();
+        }
+    }
 
     void LevelUpVirus()
     {

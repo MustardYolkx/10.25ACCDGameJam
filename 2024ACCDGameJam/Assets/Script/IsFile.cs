@@ -39,7 +39,7 @@ public class IsFile : MonoBehaviour
     {
         if(hasVirus)
         {
-            currentProcess += virusInfectSpeed * Time.deltaTime;
+            currentProcess += virusInfectSpeed * Time.deltaTime - GameRoot.GetInstance().antiVirusKillingSpeed * Time.deltaTime;
             virusProcess.GetComponent<Image>().fillAmount = currentProcess / 1;
         }
     }
