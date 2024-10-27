@@ -78,19 +78,25 @@ public class GameRoot : MonoBehaviour
 
     IEnumerator CheckEntireProcess()
     {
-        float totalPercent = 0.01f;
-        for(int i = 0; i < file_List.Count; i++)
+        while (true)
         {
-            totalPercent += file_List[i].currentProcess;
+            float totalPercent = 0.01f;
+            for (int i = 0; i < file_List.Count; i++)
+            {
+                totalPercent += file_List[i].currentProcess;
+            }
+            entireProcess = totalPercent / file_List.Count;
+
+            // 调用胜利条件检查
+            CheckWinCondition();
+
+            yield return new WaitForSeconds(0.2f); // 每0.2秒检查一次
         }
-        entireProcess = totalPercent/ file_List.Count;
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(CheckEntireProcess());
     }
 
     public void CheckWinCondition()
     {
-        if(entireProcess == 1)
+        if(entireProcess >= 1)
         {
             GameWin();
         }
