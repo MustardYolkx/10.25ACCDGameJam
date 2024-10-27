@@ -5,7 +5,9 @@ using UnityEngine;
 public class AntivirusSystem : MonoBehaviour
 {
     public float antivirusSpeed = 5f; // The infection progress reduced by each antivirus. !!!Modify it!!!
+
     public bool isAntivirusRunning = false; // Mark whether it is running
+
     private GameObject currentTarget = null; // Current target file
 
     public void RunAntivirus(Dictionary<string, GameObject> computerFileDictionary)
@@ -36,19 +38,30 @@ public class AntivirusSystem : MonoBehaviour
                 // Gradually reduce the progress of infection
                 while (fileComponent.currentProcess > 0)
                 {
+                    yield return new WaitForEndOfFrame();
+
                     fileComponent.currentProcess -= antivirusSpeed * Time.deltaTime;
 
                     //Make sure progress doesn't drop to negative values
                     if (fileComponent.currentProcess < 0)
                         fileComponent.currentProcess = 0;
 
-                    yield return null; // Update every frame
+                    //yield return null; // Update every frame
                 }
 
                 // Clear virus markers
                 fileComponent.hasVirus = false;
                 currentTarget = null;
             }
+        }
+        OwnerAI ownerAI = FindObjectOfType<OwnerAI>().GetComponent<OwnerAI>();
+        if (ownerAI != null) 
+        { 
+            ownerAI.AntivirusTaskCompleted(true);
+        }
+        else
+        {
+            Debug.Log("ownerAI script not found!");
         }
 
         isAntivirusRunning = false; // Complete the check and turn off the antivirus system

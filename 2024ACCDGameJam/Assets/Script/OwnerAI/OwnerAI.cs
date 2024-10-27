@@ -114,12 +114,6 @@ public class OwnerAI : MonoBehaviour
     {
         // activate antivirus software
         antivirusSystem.RunAntivirus(gameRoot.computerFile_Dictionary);
-
-        if (!antivirusSystem.isAntivirusRunning)
-        {
-            currentState = OwnerStates.Active;
-            Debug.Log("antivirus finished running");
-        }
     }
     // functional yaaaaaay party
     private bool IsVirusRunning()
@@ -145,16 +139,30 @@ public class OwnerAI : MonoBehaviour
                 // Check if the file is currently infected
                 if (fileComponent != null && fileComponent.fileInfo.hasVirus)
                 {
-                    
                     virusFound = true;
                 }
                 else { virusFound = false; }
             }
+
+            if (virusFound) {Debug.Log("virus detected---return true"); return true; }    
+            else { return false; }
         }
         else { return false; }
+    }
 
-        if (virusFound) {Debug.Log("virus detected---return true"); return true; }    
-        else { return false; }
+    public void AntivirusTaskCompleted(bool taskComplete)
+    {
+        if (!taskComplete) 
+        {
+            return;
+        }
+        else
+        {
+            currentState = OwnerStates.Active;
+            Debug.Log("antivirus finished running");
+
+            taskComplete = false;
+        }
     }
 
     # region coroutines
