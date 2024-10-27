@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/02_TutorialScene.unity
     guid: fd59a88f06cbdbe4e8793aaddae90114
   - enabled: 1
-    path: Assets/Scenes/Yixin_TestScene.unity
-    guid: fe2a51dde8302254f9b74c0e0a971eaf
+    path: Assets/Scenes/HackFunctionality_OwnerAIGameLoop.unity
+    guid: 0e1b359e9f11bd84cb7a0115466a5500
   m_configObjects: {}
