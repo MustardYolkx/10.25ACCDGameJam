@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5784326003362021155}
+  - component: {fileID: 6961063007076003418}
   m_Layer: 0
   m_Name: MiniGame1
   m_TagString: Untagged
@@ -36,6 +37,22 @@ Transform:
   - {fileID: 1211729584144942859}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6961063007076003418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056686579850905282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87915392609672143ab1bd3f36051b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointer: {fileID: 4211010847771018424}
+  hitZone: {fileID: 400054371202464797}
+  rotationSpeed: 100
+  completionText: {fileID: 6637967611512158728}
 --- !u!1 &3012934329944984993
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +420,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5659694524085098695}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87915392609672143ab1bd3f36051b93, type: 3}
   m_Name: 

@@ -58,7 +58,10 @@ public class HackerInputPanel : MonoBehaviour
             currentInput = inputContent.ToLower();
            
         }
-        Debug.Log("1");
+        else
+        {
+            
+        }
         Debug.Log(currentInput);
         OperateInputMessage();
     }
@@ -82,7 +85,7 @@ public class HackerInputPanel : MonoBehaviour
             ClearInputField();
             CheckIfBeCatchedByOwner();
         }
-        else if (inputContent.Contains("copy")&& inputContent.Contains("rootvirus"))
+        else if (inputContent.Contains("copy")&&( inputContent.Contains("virus")|| inputContent.Contains("rootvirus")))
         {
             if(!gotARootVirus)
             {
@@ -98,7 +101,7 @@ public class HackerInputPanel : MonoBehaviour
             }
             
         }
-        else if(inputContent.Contains("infect") && inputContent.Contains("subvirus"))
+        else if(inputContent.Contains("infect") && inputContent.Contains("virus"))
         {
             if(gotARootVirus)
             {
@@ -106,26 +109,28 @@ public class HackerInputPanel : MonoBehaviour
                 {
                     if (name == inputContent[2])
                     {
+
                         AddInputToText(currentInputNoEdit, true);
                         ClearInputField();
-                        CheckIfBeCatchedByOwner();
+                        
                         //generate verify prefab
                         GameObject verifyPrefab = Resources.Load<GameObject>("Prefab/MiniGamePrefeb/weaVerifyPrefab");
                         GameObject verifyInstance = Instantiate(verifyPrefab, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
 
-
-                        
-                        verifyInstance.GetComponent<Verify>().OnVerificationComplete += () =>
+                        verifyInstance.GetComponentInChildren<Verify>().OnVerificationComplete += () =>
                         {
+                            Debug.Log("Add Delegate");
                             // delete verify prefab
                             Destroy(verifyInstance);
-
+                            CheckIfBeCatchedByOwner();
                             //InstantiateAProcessBar
                             GameObject processBar = Resources.Load<GameObject>("Prefab/VirusInstallProcessBar");
                             GameObject bar = Instantiate(processBar, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
                             bar.GetComponent<VirusInstallProcessBar_UI>().hackerInput = this;
                             bar.GetComponent<VirusInstallProcessBar_UI>().contentFromHackInput = name;
                         };
+
+
                     }
                 }
             }
@@ -153,10 +158,9 @@ public class HackerInputPanel : MonoBehaviour
         else if (inputContent.Contains("level") && inputContent.Contains("up") && inputContent.Contains("virus"))
         {
             LevelUpVirus();
-            AddInputToText(currentInputNoEdit, false);
+            AddInputToText(currentInputNoEdit, true);
             ClearInputField();
         }
-
 
         else
         {
@@ -223,7 +227,7 @@ public class HackerInputPanel : MonoBehaviour
     {
         GameObject tagetPanel = Resources.Load<GameObject>("UIPanel/"+name+"Panel");
         GameObject pageOBJ = Instantiate(tagetPanel, GameRoot.GetInstance().UIManager_Root.canvasObj.transform);
-        pageOBJ.GetComponent<PageInfo>().fileInfo = GameRoot.GetInstance().computerFile_Dictionary[name].GetComponent<IsFile>();
+        //pageOBJ.GetComponent<PageInfo>().fileInfo = GameRoot.GetInstance().computerFile_Dictionary[name].GetComponent<IsFile>();
         GameRoot.GetInstance().currentOpenFile_Dictionary.Add(pageOBJ.GetComponent<PageInfo>().fileName, pageOBJ);
         
         //GameRoot.GetInstance().UIManager_Root.Push(new UnityPanel());
@@ -292,5 +296,10 @@ public class HackerInputPanel : MonoBehaviour
     {
         Debug.Log("Infection sped up for the current file!");
         // 加速感染过程
+        foreach(IsFile f in GameRoot.GetInstance().file_List)
+        {
+            f.virusInfectSpeed += 0.05f;
+            GameRoot.GetInstance().virusOriginSpeed += 0.05f;
+        }
     }
 }

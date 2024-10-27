@@ -42,5 +42,13 @@ public class IsFile : MonoBehaviour
             currentProcess += virusInfectSpeed * Time.deltaTime - GameRoot.GetInstance().antiVirusKillingSpeed * Time.deltaTime;
             virusProcess.GetComponent<Image>().fillAmount = currentProcess / 1;
         }
+        if (currentProcess < 0)
+        {
+            currentProcess = 0;
+        }
+        else if(currentProcess >1)
+        {
+            currentProcess = 1;
+        }
     }
 }

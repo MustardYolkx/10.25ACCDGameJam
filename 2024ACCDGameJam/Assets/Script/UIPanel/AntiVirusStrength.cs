@@ -18,6 +18,14 @@ public class AntiVirusStrength : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        powerNumber.text = (gameRoot.antiVirusKillingSpeed * 100).ToString("0");
+        if (gameRoot.isAntiSystemKilling)
+        {
+
+             powerNumber.text = (gameRoot.antivirusSystem.antivirusSpeed * 100).ToString("0");
+        }
+        else
+        {
+            powerNumber.text = (gameRoot.antiVirusKillingSpeed * 100).ToString("0");
+        }
     }
 }
