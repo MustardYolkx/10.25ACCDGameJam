@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 7817085074749223059}
   - component: {fileID: 2553012291746023650}
   - component: {fileID: 1592208788771547341}
+  - component: {fileID: 760529042019131647}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -565,9 +566,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3749593843718269778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4822effd801d2d43b1a3229a49c29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 7331444821021806056}
+  completionText: {fileID: 6506424569897035158}
+--- !u!114 &760529042019131647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3749593843718269778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e46250975a1bde4f9b656c42056cf3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 7331444821021806056}
@@ -791,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 964620370013131997}
   m_Layer: 5
-  m_Name: Yanzhengma
+  m_Name: VerifyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
