@@ -448,9 +448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootVirusInstantiatePos: {fileID: 1076148353}
-  verifyPrefab: {fileID: 5535390525326482205, guid: fe92d63537fe2414bb8af63a8357e8d3, type: 3}
-  qteGamePrefab: {fileID: 1056686579850905282, guid: c8fcffcdbec61914c82824cd3006cabe, type: 3}
-  spiningPuzzlePrefab: {fileID: 6104499834872276010, guid: dc5c32a88a45e0244863fa67c5e972e2, type: 3}
   gotARootVirus: 0
 --- !u!1 &453020068
 GameObject:
