@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class winPanelPin : MonoBehaviour
 {
@@ -14,5 +15,10 @@ public class winPanelPin : MonoBehaviour
     void Update()
     {
         transform.SetAsLastSibling();
+    }
+
+    public void JumpToStartScene()
+    {
+        SceneManager.LoadScene("01_CoverScene");
     }
 }

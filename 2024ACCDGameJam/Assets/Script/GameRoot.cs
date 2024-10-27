@@ -80,7 +80,7 @@ public class GameRoot : MonoBehaviour
     {
         while (true)
         {
-            float totalPercent = 0.01f;
+            float totalPercent = 0;
             for (int i = 0; i < file_List.Count; i++)
             {
                 totalPercent += file_List[i].currentProcess;
